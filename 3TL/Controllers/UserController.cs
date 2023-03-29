@@ -8,8 +8,10 @@ using System.Web.Http;
 
 namespace _3TL.Controllers
 {
-    public class UserController : ApiController
+    public class UsersController : ApiController
     {
+        [HttpGet]
+        [Route("api/users")]
         public IHttpActionResult Get()
         {
             try
@@ -24,6 +26,8 @@ namespace _3TL.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("api/users/{id}")]
         public IHttpActionResult Get(int id)
         {
             try
@@ -37,16 +41,52 @@ namespace _3TL.Controllers
             }
         }
 
-        public IHttpActionResult Post(int id)
+        [HttpPost]
+        [Route("api/users")]
+        public IHttpActionResult Post([FromBody] Users user)
         {
             try
             {
-                return Ok(UsersBLL.GetUsersGreaterThenId(id));
+                int id = UsersBLL.CreateUser(user);
+                return Ok(id);
             }
             catch (Exception e)
             {
-                return Content(HttpStatusCode.Conflict, e);
+                return BadRequest(e.Message);
             }
         }
+
+
+        [HttpPut]
+        [Route("api/users/{id}")]
+        public IHttpActionResult Put(int id, [FromBody] Users user)
+        {
+            try
+            {
+                user.Id = id;
+                UsersBLL.UpdateUser(user);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
+        [HttpDelete]
+        [Route("api/users/{id}")]
+        public IHttpActionResult Delete(int id)
+        {
+            try
+            {
+                UsersBLL.DeleteUser(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+
     }
 }

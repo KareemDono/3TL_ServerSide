@@ -1,4 +1,4 @@
-﻿ using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -29,9 +29,20 @@ namespace _3TL.Models
             return user;
         }
 
-        public static List<Users> GetUsersGreaterThenId(int id)
+        public static int CreateUser(Users user)
         {
-            return UserDBServices.GetUsersGreaterThenId(id);
+            return UserDBServices.CreateUser(user);
+        }
+
+        public static void UpdateUser(Users user)
+        {
+            UserDBServices.UpdateUser(user);
+        }
+        public static void DeleteUser(int id)
+        {
+            UserDBServices.DeleteUser(id);
         }
     }
 }
+
+
